@@ -1,0 +1,58 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn Ethers.js</title>
+  </head>
+  <body>
+    <script
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+      type="application/javascript"
+    ></script>
+    <script>
+      let provider = new ethers.providers.Web3Provider(window.ethereum);
+      let signer;
+      let ETH_USD;
+      async function connectMetamask() {
+        await provider.send("eth_requestAccounts", []);
+        signer = await provider.getSigner();
+        const address = await signer.getAddress();
+      }
+      connectMetamask();
+      const aggregatorV3InterfaceABI = [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "getLatestPrice",
+          outputs: [
+            {
+              internalType: "int256",
+              name: "",
+              type: "int256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ];
+      const addr = "0x3698773687d546B2ce4F053B09514A14d79712bf";
+      let fun = async () => {
+        const priceFeed = new ethers.Contract(
+          addr,
+          aggregatorV3InterfaceABI,
+          provider
+        );
+        const data = await priceFeed.getLatestPrice();
+        ETH_USD = parseInt(data, 10);
+        console.log(ETH_USD);
+      };
+
+      fun();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+      type="application/javascript"
+    ></script>
+    <script>
+      const main = async () => {
+        const [owner, randomPerson] = await hre.ethers.getSigners();
+        const domainContractFactory = await hre.ethers.getContractFactory(
+          "Domains"
+        );
+        const domainContract = await domainContractFactory.deploy("voltz");
+        await domainContract.deployed();
+        console.log("Contract deployed to:", domainContract.address);
+        console.log("Contract deployed by:", owner.address);
+
+        let txn = await domainContract.register("chi", {
+          value: hre.ethers.utils.parseEther("0.1"),
+        });
+        await txn.wait();
+
+        const domainOwner = await domainContract.getAddress("chi");
+        console.log("Owner of domain:", domainOwner);
+
+        const balance = await hre.ethers.provider.getBalance(
+          domainContract.address
+        );
+        console.log("Contract balance:", hre.ethers.utils.formatEther(balance));
+      };
+
+      const runMain = async () => {
+        try {
+          await main();
+          process.exit(0);
+        } catch (error) {
+          console.log(error);
+          process.exit(1);
+        }
+      };
+
+      runMain();
+    </script>
+  </body>
+</html>
