@@ -95,31 +95,31 @@
     <span>WOW Domains <img src="./logo.png" alt="NFTstudio24logo" /></span
     ><span><button onclick="connectMetamask()">Connect Wallet</button></span>
 
-    <form action="/action_page.php" method="post">
-      <div class="imgcontainer">
-        <input type="text" disabled id="adda" />
-      </div>
+    <div class="imgcontainer">
+      <input type="text" disabled id="adda" />
+    </div>
 
-      <div class="container">
-        <label for="uname"><b>Register domain here</b></label>
-        <input
-          type="text"
-          placeholder="check your domain eg: NFTstudio24"
-          name="uname"
-        />
-        <button>Check Availiblity</button>
+    <div class="container">
+      <label for="uname"><b>Register domain here</b></label>
+      <input
+        type="text"
+        placeholder="check your domain eg: NFTstudio24"
+        name="uname"
+        id="reg_id"
+      />
+      <button onclick="resigter()">Check Availiblity</button>
 
-        <label for="psw"><b>Domain to Address</b></label>
-        <input
-          type="password"
-          placeholder="Enter your domain eg: NFTstudio24.wow"
-          name="psw"
-          required
-        />
+      <label for="psw"><b>Domain to Address</b></label>
+      <input
+        type="text"
+        placeholder="Enter your domain eg: NFTstudio24.wow"
+        name="psw"
+        id="dtoa"
+      />
 
-        <button type="submit">Check Address</button>
-      </div>
-    </form>
+      <button onclick="dtoa()">Check Address</button>
+    </div>
+
     <footer>@Copywrite Rao Hammad Ali Github:RaoSahab</footer>
     <script
       src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
